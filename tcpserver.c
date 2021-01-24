@@ -43,7 +43,7 @@ void func(int sockfd)
 
 		if(strncmp("exit",buff,4)==0)
 		{
-			printf("Server exit .....");
+			printf("Server exit .....\n");
 			break;
 		}
 
@@ -59,7 +59,7 @@ int main()
 {
 
 
-	int sockfd,confd,len;
+	int sockfd,confd,len,test;
 
 	struct sockaddr_in servaddr,cli;
 
@@ -84,7 +84,7 @@ int main()
 	servaddr.sin_port=htons(PORT);
 
 
-	if((bind(sockfd, (SA*)&servaddr,sizeof(servaddr)))!=0)
+	if(test=(bind(sockfd, (SA*)&servaddr,sizeof(servaddr)))!=0)
 	{
 		printf("socket bind failed...\n");
 		exit(0);
@@ -122,7 +122,42 @@ int main()
 
 	func(confd);
 
+	testserver(sockfd,confd,test);
+
 
 	close(sockfd);
+
+}
+void testserver(int sockfd,int confd,int test)
+{
+
+	struct sockaddr_in servaddr;
+
+
+
+	if(sockfd!=-1)
+	{
+		if(test==0)
+		{
+			if(confd>=0)
+			{
+				printf("Server Test Pass.......\n");
+			}
+			else
+			{
+				printf("Server test fail....\n");
+			}
+		}
+		else
+		{
+			printf("Server test fail...\n");
+		}
+		
+        
+	}
+	else
+	{
+		printf("Server test fail...\n");
+	}
 
 }

@@ -61,7 +61,7 @@ int main()
 {
 
 
-	int sockfd,confd;
+	int sockfd,test;
 
 	struct sockaddr_in servaddr,cli;
 
@@ -86,7 +86,7 @@ int main()
 	servaddr.sin_port=htons(PORT);
 
 
-	if((connect(sockfd,(SA*)&servaddr,sizeof(servaddr)))!=0)
+	if(test=(connect(sockfd,(SA*)&servaddr,sizeof(servaddr)))!=0)
 	{
 		printf("connection with server  failed...\n");
 		exit(0);
@@ -102,6 +102,27 @@ int main()
 	func(sockfd);
 
 
+	testclient(sockfd,test);
+
+
 	close(sockfd);
 
+}
+
+void testclient(int sockfd,int test)
+{
+
+
+	if(sockfd==0)
+	{
+		if(test==0)
+		{
+			printf("Client Test Pass....\n");
+		}
+		else
+		{
+			printf("Client Test Fail.....\n");
+		}
+
+	}
 }
