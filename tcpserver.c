@@ -107,25 +107,25 @@ int main()
 
 	len=sizeof(cli);
 
-
-
-	confd=accept(sockfd,(SA*)&cli,&len);
-
-	if(confd<0)
+	while(1)
 	{
-		printf("server accept failed....\n");
-		exit(0);
+		confd=accept(sockfd,(SA*)&cli,&len);
+		if(confd==-1)
+		{
+			printf("connection failed.....\n");
+			exit(0);
+		}
+		else
+		{
+			printf("connection accepted.....\n");
+			func(confd);
+		
+			
+		}
 	}
-	else
-		printf("server accept the client");
-
-
-	func(confd);
-
 	testserver(sockfd,confd,test);
-
-
 	close(sockfd);
+
 
 }
 void testserver(int sockfd,int confd,int test)
